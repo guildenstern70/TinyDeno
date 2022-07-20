@@ -6,8 +6,7 @@
  */
 
 import { Application, Router } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { configure } from "https://deno.land/x/eta@v1.12.3/config.ts";
-import { renderFileAsync } from "https://deno.land/x/eta@v1.12.3/file-handlers.ts";
+import { configure, renderFile } from "https://deno.land/x/eta@v1.12.3/mod.ts";
 
 // Eta Views path
 configure({
@@ -18,7 +17,7 @@ const router = new Router();
 router.get("/", async (ctx: any) => {
 
     ctx.response.headers.set("Content-Type", "text/html");
-    ctx.response.body = await renderFileAsync("index.eta", {
+    ctx.response.body = await renderFile("index", {
         appname: "Tiny Deno",
         appdescription: "Welcome to Tiny Deno"
     });
