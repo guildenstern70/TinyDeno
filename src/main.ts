@@ -6,7 +6,8 @@
  */
 
 import { Application, Router } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { configure, renderFile } from "https://deno.land/x/eta@v1.12.3/mod.ts";
+import { configure, render } from "https://deno.land/x/eta@v1.12.3/mod.ts";
+import { Template } from "./template.ts";
 
 // Eta Views path
 configure({
@@ -17,10 +18,14 @@ const router = new Router();
 router.get("/", async (ctx: any) => {
 
     ctx.response.headers.set("Content-Type", "text/html");
-    ctx.response.body = await renderFile("index", {
+    const template = new Template();
+    const etaIndex = template.getIndex();
+    console.log(etaIndex);
+    ctx.response.body = await render(template.getIndex(), {
         appname: "Tiny Deno",
         appdescription: "Welcome to Tiny Deno"
     });
+
 });
 
 const app = new Application();
